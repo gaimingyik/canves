@@ -2,7 +2,6 @@
   <div class="canvas-box">
     <button @click="isFiniteCall">线条显示</button>
     <canvas ref="canvasRef" width="1000" height="400"></canvas>
-    <div></div>
   </div>
 </template>
 

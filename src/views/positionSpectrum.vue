@@ -26,7 +26,7 @@ onMounted(() => {
     lineWidth = 0
   ) {
     ctx.beginPath()
-    ctx.moveTo(x, y)
+    ctx.moveTo(x + radiusrt, y)
     ctx.lineTo(x + width - radiusrt, y)
     ctx.quadraticCurveTo(x + width, y, x + width, y + radiusrt)//这个是右上角的弧线
     ctx.lineTo(x + width, y + height - radiusrb)
@@ -82,11 +82,11 @@ onMounted(() => {
       , radiusrt: 0, radiusrb: 0, radiuslt: 15, radiuslb: 0, scrollY: 0,
       strokeColor: '#fff', bgColor: '#514be9', lineWidth: 1, children: [
         {
-          id: 0, parent: 0, x: 90, y: 200, w: 170, h: 30, color: '#3a007b', bgColor: '#e1e2f9', text: '内科护理',
+          id: 0, x: 90, y: 200, w: 170, h: 30, color: '#3a007b', bgColor: '#e1e2f9', text: '内科护理',
           radiusrt: 10, radiusrb: 10, radiuslt: 10, radiuslb: 10
         },
         {
-          id: -1, parent: 0, x: 90, y: 250, w: 170, h: 30, color: '#3a007b', bgColor: '#e1e2f9', text: '外科护理',
+          id: -1, x: 90, y: 250, w: 170, h: 30, color: '#3a007b', bgColor: '#e1e2f9', text: '外科护理',
           radiusrt: 10, radiusrb: 10, radiuslt: 10, radiuslb: 10
         },
       ]
@@ -100,7 +100,7 @@ onMounted(() => {
           radiusrt: 5, radiusrb: 5, radiuslt: 5, radiuslb: 5
         },
         {
-          id: 2, parent: [0, -1], x: 315, y: 250, w: 170, h: 50, color: '#3a007b', bgColor: '#e1e2f9', text: '呼吸系统疾病病人的护理',
+          id: 2, parent: [0], x: 315, y: 250, w: 170, h: 50, color: '#3a007b', bgColor: '#e1e2f9', text: '呼吸系统疾病病人的护理',
           radiusrt: 5, radiusrb: 5, radiuslt: 5, radiuslb: 5
         },
         {
@@ -258,6 +258,7 @@ onMounted(() => {
       for (const p of p2) {
         if (!p || !p.lineWidth) continue
         // if (!p) continue
+
         const y1 = p.y + p.h / 2 - level2.scrollY
         const y2 = n3.y + n3.h / 2 - level3.scrollY
         drawCurvedLine(p.x + p.w, y1, n3.x, y2)
@@ -386,6 +387,7 @@ onMounted(() => {
         b.children.forEach(c => {
           c.strokeColor = '#fff'
           c.lineWidth = 0
+          c.color = '#3a007b'
         })
       })
       console.log('node', node)
@@ -423,78 +425,77 @@ onMounted(() => {
     drawAll()
   };
 
-  function getAllRelatedNodesWithLevel(boxes, targetNode) {
-    const allNodes = [];
-    boxes.forEach((level, levelIndex) => {
-      level.children.forEach(child => {
-        child.levelIndex = levelIndex;
-        allNodes.push(child);
-      });
+function getAllRelatedNodesWithLevel(boxes, targetNode) {
+  const allNodes = [];
+  boxes.forEach((level, levelIndex) => {
+    level.children.forEach(child => {
+      child.levelIndex = levelIndex;
+      allNodes.push(child);
     });
+  });
 
-    const updateNodeStyle = (node, color = '#000', width = 1) => {
-      node.strokeColor = blockSelected.borderColor;
-      node.color = blockSelected.color;
-      node.lineWidth = width;
-    };
+  const updateNodeStyle = (node, color = '#000', width = 1) => {
+    node.strokeColor = blockSelected.borderColor;
+    node.color = blockSelected.color;
+    node.lineWidth = width;
+  };
 
-    const findById = id => allNodes.find(n => n.id === id);
+  const findById = id => allNodes.find(n => n.id === id);
 
-    // 支持节点 parent 是数组的情况
-    const findChildren = parentId =>
-      allNodes.filter(n =>
-        Array.isArray(n.parent)
-          ? n.parent.includes(parentId)
-          : n.parent === parentId
-      );
+  const findChildren = parentId =>
+    allNodes.filter(n =>
+      Array.isArray(n.parent)
+        ? n.parent.includes(parentId)
+        : n.parent === parentId
+    );
 
-    // 递归获取所有后代节点（防止循环引用）
-    const collectAllDescendants = (nodeId, parentLevel, acc = [], visited = new Set()) => {
-      if (visited.has(nodeId)) return acc;
-      visited.add(nodeId);
+  const collectAllDescendants = (nodeId, parentLevel, acc = [], visited = new Set()) => {
+    if (visited.has(nodeId)) return acc;
+    visited.add(nodeId);
 
-      const children = findChildren(nodeId);
-      for (const child of children) {
-        if (!acc.includes(child)) {
-          child.relativeLevel = parentLevel + 1;
-          acc.push(child);
-          collectAllDescendants(child.id, parentLevel + 1, acc, visited);
-        }
+    const children = findChildren(nodeId);
+    for (const child of children) {
+      if (!acc.includes(child)) {
+        child.relativeLevel = parentLevel + 1;
+        acc.push(child);
+        collectAllDescendants(child.id, parentLevel + 1, acc, visited);
       }
-      return acc;
-    };
+    }
+    return acc;
+  };
 
-    const currentNode = findById(targetNode.id);
-    if (!currentNode) return null;
+  const currentNode = findById(targetNode.id);
+  if (!currentNode) return null;
 
-    currentNode.relativeLevel = 0;
+  currentNode.relativeLevel = 0;
 
-    // 多父节点的向上递归
-    const parents = [];
-    const visited = new Set();
+  // 向上递归收集父节点
+  const parents = [];
+  const visited = new Set();
+  const collectParents = (node, level = 0) => {
+    if (!node || visited.has(node.id)) return;
+    visited.add(node.id);
 
-    const collectParents = (node, level = 0) => {
-      if (!node || visited.has(node.id)) return;
-      visited.add(node.id);
-
-      const parentsArr = Array.isArray(node.parent) ? node.parent : [node.parent];
-      for (const pid of parentsArr) {
-        const pNode = findById(pid);
-        if (pNode) {
-          pNode.relativeLevel = level - 1;
-          parents.push(pNode);
-          updateNodeStyle(pNode);
-          collectParents(pNode, level - 1);
-        }
+    const parentsArr = Array.isArray(node.parent) ? node.parent : [node.parent];
+    for (const pid of parentsArr) {
+      if (pid === undefined || pid === null) continue;
+      const pNode = findById(pid);
+      if (pNode) {
+        pNode.relativeLevel = level - 1;
+        parents.push(pNode);
+        updateNodeStyle(pNode);
+        collectParents(pNode, level - 1);
       }
-    };
+    }
+  };
+  collectParents(currentNode);
 
-    collectParents(currentNode);
+  const topParent = parents.length > 0 ? parents[parents.length - 1] : null;
 
-    const topParent = parents.length > 0 ? parents[parents.length - 1] : null;
-
-    // 同级兄弟节点
-    const siblings = allNodes.filter(n => {
+  // 当前节点兄弟节点，只有 parent 存在才找
+  let siblings = [];
+  if (currentNode.parent && ((Array.isArray(currentNode.parent) && currentNode.parent.length > 0) || !Array.isArray(currentNode.parent))) {
+    siblings = allNodes.filter(n => {
       if (n.id === currentNode.id) return false;
       if (Array.isArray(n.parent) && Array.isArray(currentNode.parent)) {
         return n.parent.some(pid => currentNode.parent.includes(pid));
@@ -505,19 +506,37 @@ onMounted(() => {
       n.relativeLevel = 0;
       updateNodeStyle(n);
     });
-
-    // 所有后代节点
-    const descendants = collectAllDescendants(currentNode.id, 0);
-    descendants.forEach(d => updateNodeStyle(d));
-
-    return {
-      target: currentNode,
-      parents,
-      siblings,
-      descendants,
-      topParent
-    };
   }
+
+  // 父节点的兄弟节点
+  const parentSiblings = [];
+  parents.forEach(p => {
+    if (!p.parent || (Array.isArray(p.parent) && p.parent.length === 0)) return;
+    const bros = allNodes.filter(n => {
+      if (n.id === p.id) return false;
+      if (Array.isArray(n.parent) && Array.isArray(p.parent)) {
+        return n.parent.some(pid => p.parent.includes(pid));
+      }
+      return n.parent === p.parent;
+    });
+    bros.forEach(b => updateNodeStyle(b));
+    parentSiblings.push(...bros);
+  });
+
+  // 所有后代节点
+  const descendants = collectAllDescendants(currentNode.id, 0);
+  descendants.forEach(d => updateNodeStyle(d));
+
+  return {
+    target: currentNode,
+    parents,
+    parentSiblings,
+    siblings,
+    descendants,
+    topParent
+  };
+}
+
 
 
   // 鼠标按下

@@ -21,7 +21,7 @@ onMounted(() => {
 
   // 通用函数：绘制圆角矩形
   function drawRoundedRect(x, y, width, height, radiusrt, radiusrb, radiuslt, radiuslb, color = '#4a90e2',
-    strokeColor = '#000',
+    strokeColor = '#fff',
     lineWidth = 0
   ) {
     ctx.beginPath()
@@ -64,95 +64,106 @@ onMounted(() => {
     ctx.fillText(line, x, y + offsetY)
   }
 
+  //选中框体的颜色
+  const blockSelected = {
+    color: '#4b82ff',
+    bgColor: '#e0f0ff',
+    borderColor: '#4b82ff',
+  }
+  //连接线与角标的颜色
+  const link = {
+    lineColor: '#0e2af5',
+    cornerColor: '#0e2af5',
+  }
   const boxes = [
     {
-      x: 70, y: 70, w: 150, h: 50, color: '#ff8006', text: '课程名称'
-      , radiusrt: 0, radiusrb: 0, radiuslt: 50, radiuslb: 0, scrollY: 0,
-      strokeColor: '#f5f3ff', lineWidth: 1, children: [
+      x: 70, y: 70, w: 200, h: 50, color: '#fff', text: '课程名称'
+      , radiusrt: 0, radiusrb: 0, radiuslt: 15, radiuslb: 0, scrollY: 0,
+      strokeColor: '#fff', bgColor: '#514be9', lineWidth: 1, children: [
         {
-          id: 0, x: 90, y: 200, w: 120, h: 30, color: '#9765fe', text: '内科护理',
+          id: 0, parent: 0, x: 90, y: 200, w: 170, h: 30, color: '#3a007b', bgColor: '#e1e2f9', text: '内科护理',
           radiusrt: 10, radiusrb: 10, radiuslt: 10, radiuslb: 10
         },
         {
-          id: -1, x: 90, y: 250, w: 120, h: 30, color: '#9765fe', text: '外科护理',
+          id: -1, parent: 0, x: 90, y: 250, w: 170, h: 30, color: '#3a007b', bgColor: '#e1e2f9', text: '外科护理',
           radiusrt: 10, radiusrb: 10, radiuslt: 10, radiuslb: 10
         },
       ]
     },
     {
-      x: 250, y: 70, w: 150, h: 50, color: '#feb004', text: '一级节点名称',
+      x: 300, y: 70, w: 200, h: 50, color: '#fff', text: '一级节点名称',
       radiusrt: 0, radiusrb: 0, radiuslt: 0, radiuslb: 0, scrollY: 0,
-      strokeColor: '#fff', lineWidth: 0.5, children: [
+      strokeColor: '#fff', bgColor: '#514be9', lineWidth: 0.5, children: [
         {
-          id: 1, parent: [-1], x: 265, y: 150, w: 120, h: 50, color: '#ecdeff', text: '呼吸系统疾病病人的护理',
+          id: 1, parent: [-1], x: 315, y: 150, w: 170, h: 50, color: '#3a007b', bgColor: '#e1e2f9', text: '呼吸系统疾病病人的护理',
           radiusrt: 5, radiusrb: 5, radiuslt: 5, radiuslb: 5
         },
         {
-          id: 2, parent: [0, -1], x: 265, y: 250, w: 120, h: 50, color: '#ecdeff', text: '呼吸系统疾病病人的护理',
+          id: 2, parent: [0, -1], x: 315, y: 250, w: 170, h: 50, color: '#3a007b', bgColor: '#e1e2f9', text: '呼吸系统疾病病人的护理',
           radiusrt: 5, radiusrb: 5, radiuslt: 5, radiuslb: 5
         },
         {
-          id: 3, parent: [-1], x: 265, y: 350, w: 120, h: 50, color: '#ecdeff', text: '呼吸系统疾病病人的护理',
+          id: 3, parent: [-1], x: 315, y: 350, w: 170, h: 50, color: '#3a007b', bgColor: '#e1e2f9', text: '呼吸系统疾病病人的护理',
           radiusrt: 5, radiusrb: 5, radiuslt: 5, radiuslb: 5
         },
         {
-          id: 4, parent: [0], x: 265, y: 450, w: 120, h: 50, color: '#ecdeff', text: '呼吸系统疾病病人的护理',
+          id: 4, parent: [0], x: 315, y: 450, w: 170, h: 50, color: '#3a007b', bgColor: '#e1e2f9', text: '呼吸系统疾病病人的护理',
           radiusrt: 5, radiusrb: 5, radiuslt: 5, radiuslb: 5
         },
         {
-          id: 5, parent: [0], x: 265, y: 550, w: 120, h: 50, color: '#ecdeff', text: '呼吸系统疾病病人的护理',
+          id: 5, parent: [0], x: 315, y: 550, w: 170, h: 50, color: '#3a007b', bgColor: '#e1e2f9', text: '呼吸系统疾病病人的护理',
           radiusrt: 5, radiusrb: 5, radiuslt: 5, radiuslb: 5
         },
         {
-          id: 6, parent: [0], x: 265, y: 650, w: 120, h: 50, color: '#ecdeff', text: '呼吸系统疾病病人的护理',
+          id: 6, parent: [0], x: 315, y: 650, w: 170, h: 50, color: '#3a007b', bgColor: '#e1e2f9', text: '呼吸系统疾病病人的护理',
           radiusrt: 5, radiusrb: 5, radiuslt: 5, radiuslb: 5
         },
         {
-          id: 7, parent: [0], x: 265, y: 750, w: 120, h: 50, color: '#ecdeff', text: '呼吸系统疾病病人的护理',
+          id: 7, parent: [0], x: 315, y: 750, w: 170, h: 50, color: '#3a007b', bgColor: '#e1e2f9', text: '呼吸系统疾病病人的护理',
           radiusrt: 5, radiusrb: 5, radiuslt: 5, radiuslb: 5
         }
       ]
     },
     {
-      x: 430, y: 70, w: 150, h: 50, color: '#fec256', text: '二级节点名称',
+      x: 530, y: 70, w: 200, h: 50, color: '#fff', text: '二级节点名称',
       radiusrt: 0, radiusrb: 0, radiuslt: 0, radiuslb: 0, scrollY: 0,
-      strokeColor: '#fff', lineWidth: 0.5, children: [
+      strokeColor: '#fff', bgColor: '#514be9', lineWidth: 0.5, children: [
         {
-          id: 8, parent: [1], x: 445, y: 150, w: 120, h: 50, color: '#ecdeff', text: '呼吸系统疾病病人的护理',
+          id: 8, parent: [1], x: 545, y: 150, w: 170, h: 50, color: '#3a007b', bgColor: '#e1e2f9', text: '呼吸系统疾病病人的护理',
           radiusrt: 0, radiusrb: 0, radiuslt: 0, radiuslb: 0
         },
         {
-          id: 9, parent: [2], x: 445, y: 250, w: 120, h: 50, color: '#ecdeff', text: '呼吸系统疾病病人的护理',
+          id: 9, parent: [2], x: 545, y: 250, w: 170, h: 50, color: '#3a007b', bgColor: '#e1e2f9', text: '呼吸系统疾病病人的护理',
           radiusrt: 0, radiusrb: 0, radiuslt: 0, radiuslb: 0
         },
         {
-          id: 10, parent: [1], x: 445, y: 350, w: 120, h: 50, color: '#ecdeff', text: '呼吸系统疾病病人的护理',
+          id: 10, parent: [1], x: 545, y: 350, w: 170, h: 50, color: '#3a007b', bgColor: '#e1e2f9', text: '呼吸系统疾病病人的护理',
           radiusrt: 0, radiusrb: 0, radiuslt: 0, radiuslb: 0
         },
         {
-          id: 11, parent: [3], x: 445, y: 450, w: 120, h: 50, color: '#ecdeff', text: '呼吸系统疾病病人的护理',
+          id: 11, parent: [3], x: 545, y: 450, w: 170, h: 50, color: '#3a007b', bgColor: '#e1e2f9', text: '呼吸系统疾病病人的护理',
           radiusrt: 0, radiusrb: 0, radiuslt: 0, radiuslb: 0
         }
       ]
     },
     {
-      x: 610, y: 70, w: 150, h: 50, color: '#fcde73', text: '三级节点名称',
-      radiusrt: 50, radiusrb: 0, radiuslt: 0, radiuslb: 0, scrollY: 0,
-      strokeColor: '#fff', lineWidth: 0.5, children: [
+      x: 760, y: 70, w: 200, h: 50, color: '#fff', text: '三级节点名称',
+      radiusrt: 15, radiusrb: 0, radiuslt: 0, radiuslb: 0, scrollY: 0,
+      strokeColor: '#fff', bgColor: '#514be9', lineWidth: 0.5, children: [
         {
-          id: 12, parent: [8], x: 625, y: 150, w: 120, h: 50, color: '#ecdeff', text: '呼吸系统疾病病人的护理',
+          id: 12, parent: [8], x: 775, y: 150, w: 170, h: 50, color: '#3a007b', bgColor: '#e1e2f9', text: '呼吸系统疾病病人的护理',
           radiusrt: 0, radiusrb: 0, radiuslt: 0, radiuslb: 0
         },
         {
-          id: 13, parent: [8], x: 625, y: 250, w: 120, h: 50, color: '#ecdeff', text: '呼吸系统疾病病人的护理',
+          id: 13, parent: [8], x: 775, y: 250, w: 170, h: 50, color: '#3a007b', bgColor: '#e1e2f9', text: '呼吸系统疾病病人的护理',
           radiusrt: 0, radiusrb: 0, radiuslt: 0, radiuslb: 0
         },
         {
-          id: 14, parent: [8], x: 625, y: 350, w: 120, h: 50, color: '#ecdeff', text: '呼吸系统疾病病人的护理',
+          id: 14, parent: [8], x: 775, y: 350, w: 170, h: 50, color: '#3a007b', bgColor: '#e1e2f9', text: '呼吸系统疾病病人的护理',
           radiusrt: 0, radiusrb: 0, radiuslt: 0, radiuslb: 0
         },
         {
-          id: 15, parent: [8], x: 625, y: 450, w: 120, h: 50, color: '#ecdeff', text: '呼吸系统疾病病人的护理',
+          id: 15, parent: [8], x: 775, y: 450, w: 170, h: 50, color: '#3a007b', bgColor: '#e1e2f9', text: '呼吸系统疾病病人的护理',
           radiusrt: 0, radiusrb: 0, radiuslt: 0, radiuslb: 0
         }
       ]
@@ -171,20 +182,19 @@ onMounted(() => {
     ctx.clip()
 
     boxes.forEach(b => {
-      drawRoundedRect(b.x, b.y + 50, b.w, b.h + 230, 0, 0, 0, 0, b.strokeColor, b.color, b.lineWidth)
+      drawRoundedRect(b.x, b.y + 50, b.w, b.h + 230, 0, 0, 0, 0, b.strokeColor, '', b.lineWidth)
     })
 
     boxes.forEach(b => {
-
       b.children = b.children || []
       b?.children.forEach((c) => {
         const y = c.y - b.scrollY
         // if (y + c.h < 100 || y > 400) return // 不在视口就不画
         drawRoundedRect(c.x, y, c.w, c.h + c.text.length * 2,
-          c.radiusrt, c.radiusrb, c.radiuslt, c.radiuslb, c.color,
+          c.radiusrt, c.radiusrb, c.radiuslt, c.radiuslb, c.bgColor,
           c.strokeColor, c.lineWidth)
         ctx.font = '15px Microsoft YaHei'
-        ctx.fillStyle = '#000'
+        ctx.fillStyle = c.color
         ctx.textAlign = 'center'
         ctx.textBaseline = 'middle'
         // ctx.fillText(c.text, c.x + c.w / 2, c.y + c.h / 2)
@@ -193,10 +203,10 @@ onMounted(() => {
 
       drawRoundedRect(b.x, b.y, b.w + 30, b.h,
         b.radiusrt, b.radiusrb, b.radiuslt,
-        b.radiuslb, '#fff')
+        b.radiuslb, b.strokeColor)
       drawRoundedRect(b.x, b.y, b.w, b.h,
         b.radiusrt, b.radiusrb, b.radiuslt,
-        b.radiuslb, b.color)
+        b.radiuslb, b.bgColor)
       ctx.font = '15px Microsoft YaHei'
       ctx.fillStyle = '#fff'
       ctx.textAlign = 'center'
@@ -262,8 +272,8 @@ onMounted(() => {
       // if(startNode.x){
 
       // }
-      const sy = boxes.find(n => n.x === startNode.x - 15).scrollY
-      console.log()
+      const sy = boxes.find(n => n.x === startNode.x - 15)?.scrollY
+      console.log(sy)
       const startX = startNode.x + startNode.w;
       const startY = startNode.y - sy + startNode.h / 2;
 
@@ -314,8 +324,8 @@ onMounted(() => {
     const angle = Math.atan2(y2 - y1, x2 - x1)
     const center = getArrowBaseMid(x2, y2, angle, arrowLength)
     ctx.beginPath()
-    ctx.setLineDash([5, 5])
-    ctx.strokeStyle = '#8f67db'
+    ctx.setLineDash([2, 3])
+    ctx.strokeStyle = link.lineColor
     ctx.moveTo(x1, y1)
     const midX = (x1 + center.x) / 2
     ctx.bezierCurveTo(midX, y1, midX, center.y, center.x, center.y)
@@ -332,7 +342,7 @@ onMounted(() => {
     ctx.lineTo(-arrowLength, arrowWidth / 2)  // 左下
     ctx.lineTo(-arrowLength, -arrowWidth / 2) // 左上
     ctx.closePath()
-    ctx.fillStyle = '#8f67db'
+    ctx.fillStyle = link.cornerColor
     ctx.fill()
     ctx.restore()
 
@@ -370,16 +380,17 @@ onMounted(() => {
     const y = e.clientY - rect.top;
     const node = findNodeAt(x, y);
     if (node) {
-      
+
       boxes.forEach(b => {
         b.children.forEach(c => {
           c.strokeColor = '#fff'
           c.lineWidth = 0
         })
       })
-
+      console.log('node', node)
       getAllRelatedNodesWithLevel(boxes, node)
-      node.strokeColor = '#000'
+      node.strokeColor = blockSelected.borderColor
+      node.color = blockSelected.color;
       node.lineWidth = 1
       startNode = node;
     }
@@ -411,100 +422,101 @@ onMounted(() => {
     drawAll()
   };
 
-function getAllRelatedNodesWithLevel(boxes, targetNode) {
-  const allNodes = [];
-  boxes.forEach((level, levelIndex) => {
-    level.children.forEach(child => {
-      child.levelIndex = levelIndex;
-      allNodes.push(child);
+  function getAllRelatedNodesWithLevel(boxes, targetNode) {
+    const allNodes = [];
+    boxes.forEach((level, levelIndex) => {
+      level.children.forEach(child => {
+        child.levelIndex = levelIndex;
+        allNodes.push(child);
+      });
     });
-  });
 
-  const updateNodeStyle = (node, color = '#000', width = 1) => {
-    node.strokeColor = color;
-    node.lineWidth = width;
-  };
+    const updateNodeStyle = (node, color = '#000', width = 1) => {
+      node.strokeColor = blockSelected.borderColor;
+      node.color = blockSelected.color;
+      node.lineWidth = width;
+    };
 
-  const findById = id => allNodes.find(n => n.id === id);
+    const findById = id => allNodes.find(n => n.id === id);
 
-  // 支持节点 parent 是数组的情况
-  const findChildren = parentId =>
-    allNodes.filter(n =>
-      Array.isArray(n.parent)
-        ? n.parent.includes(parentId)
-        : n.parent === parentId
-    );
+    // 支持节点 parent 是数组的情况
+    const findChildren = parentId =>
+      allNodes.filter(n =>
+        Array.isArray(n.parent)
+          ? n.parent.includes(parentId)
+          : n.parent === parentId
+      );
 
-  // 递归获取所有后代节点（防止循环引用）
-  const collectAllDescendants = (nodeId, parentLevel, acc = [], visited = new Set()) => {
-    if (visited.has(nodeId)) return acc;
-    visited.add(nodeId);
+    // 递归获取所有后代节点（防止循环引用）
+    const collectAllDescendants = (nodeId, parentLevel, acc = [], visited = new Set()) => {
+      if (visited.has(nodeId)) return acc;
+      visited.add(nodeId);
 
-    const children = findChildren(nodeId);
-    for (const child of children) {
-      if (!acc.includes(child)) {
-        child.relativeLevel = parentLevel + 1;
-        acc.push(child);
-        collectAllDescendants(child.id, parentLevel + 1, acc, visited);
+      const children = findChildren(nodeId);
+      for (const child of children) {
+        if (!acc.includes(child)) {
+          child.relativeLevel = parentLevel + 1;
+          acc.push(child);
+          collectAllDescendants(child.id, parentLevel + 1, acc, visited);
+        }
       }
-    }
-    return acc;
-  };
+      return acc;
+    };
 
-  const currentNode = findById(targetNode.id);
-  if (!currentNode) return null;
+    const currentNode = findById(targetNode.id);
+    if (!currentNode) return null;
 
-  currentNode.relativeLevel = 0;
+    currentNode.relativeLevel = 0;
 
-  // 多父节点的向上递归
-  const parents = [];
-  const visited = new Set();
+    // 多父节点的向上递归
+    const parents = [];
+    const visited = new Set();
 
-  const collectParents = (node, level = 0) => {
-    if (!node || visited.has(node.id)) return;
-    visited.add(node.id);
+    const collectParents = (node, level = 0) => {
+      if (!node || visited.has(node.id)) return;
+      visited.add(node.id);
 
-    const parentsArr = Array.isArray(node.parent) ? node.parent : [node.parent];
-    for (const pid of parentsArr) {
-      const pNode = findById(pid);
-      if (pNode) {
-        pNode.relativeLevel = level - 1;
-        parents.push(pNode);
-        updateNodeStyle(pNode);
-        collectParents(pNode, level - 1);
+      const parentsArr = Array.isArray(node.parent) ? node.parent : [node.parent];
+      for (const pid of parentsArr) {
+        const pNode = findById(pid);
+        if (pNode) {
+          pNode.relativeLevel = level - 1;
+          parents.push(pNode);
+          updateNodeStyle(pNode);
+          collectParents(pNode, level - 1);
+        }
       }
-    }
-  };
+    };
 
-  collectParents(currentNode);
+    collectParents(currentNode);
 
-  const topParent = parents.length > 0 ? parents[parents.length - 1] : null;
+    const topParent = parents.length > 0 ? parents[parents.length - 1] : null;
 
-  // 同级兄弟节点
-  const siblings = allNodes.filter(n => {
-    if (n.id === currentNode.id) return false;
-    if (Array.isArray(n.parent) && Array.isArray(currentNode.parent)) {
-      return n.parent.some(pid => currentNode.parent.includes(pid));
-    }
-    return n.parent === currentNode.parent;
-  });
-  siblings.forEach(n => {
-    n.relativeLevel = 0;
-    updateNodeStyle(n);
-  });
+    // 同级兄弟节点
+    const siblings = allNodes.filter(n => {
+      if (n.id === currentNode.id) return false;
+      if (Array.isArray(n.parent) && Array.isArray(currentNode.parent)) {
+        return n.parent.some(pid => currentNode.parent.includes(pid));
+      }
+      return n.parent === currentNode.parent;
+    });
+    siblings.forEach(n => {
+      n.relativeLevel = 0;
+      updateNodeStyle(n);
+    });
 
-  // 所有后代节点
-  const descendants = collectAllDescendants(currentNode.id, 0);
-  descendants.forEach(d => updateNodeStyle(d));
+    // 所有后代节点
+    const descendants = collectAllDescendants(currentNode.id, 0);
+    descendants.forEach(d => updateNodeStyle(d));
 
-  return {
-    target: currentNode,
-    parents,
-    siblings,
-    descendants,
-    topParent
-  };
-}
+    return {
+      target: currentNode,
+      parents,
+      siblings,
+      descendants,
+      topParent
+    };
+  }
 
 
   // 鼠标按下

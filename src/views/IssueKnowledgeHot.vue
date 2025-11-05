@@ -33,9 +33,9 @@ import { ref, onMounted, onBeforeUnmount } from "vue";
 const canvas = ref(null);
 
 // 三个节点的位置
-const parent = ref({ x: 300, y: 100 });
-const childA = ref({ x: 150, y: 300 });
-const childB = ref({ x: 450, y: 300 });
+const parent = ref({ x: 300, y: 200 });
+const childA = ref({ x: 700, y: 150 });
+const childB = ref({ x: 700, y: 400 });
 
 let dragging = null;
 let offsetX = 0;

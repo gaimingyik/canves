@@ -17,7 +17,7 @@
                     <div>
                         <img width="20px" src="@/assets/view/eyebai.png" alt="">
                         <img @click="dialogVisible = true" width="20px" src="@/assets/view/editbai.png" alt="">
-                        <img width="20px" src="@/assets/view/deletebai.png" alt="">
+                        <img width="20px" @click="handleDelet(1)" src="@/assets/view/deletebai.png" alt="">
                     </div>
                 </div>
                 <div class="cardAdd" @click="handleAdd(1)">
@@ -40,7 +40,7 @@
                     <div>
                         <img width="20px" src="@/assets/view/eyebai.png" alt="">
                         <img @click="dialogVisible = true" width="20px" src="@/assets/view/editbai.png" alt="">
-                        <img width="20px" src="@/assets/view/deletebai.png" alt="">
+                        <img width="20px" @click="handleDelet(2)" src="@/assets/view/deletebai.png" alt="">
                     </div>
                 </div>
                 <div class="cardAdd" @click="handleAdd(2)">
@@ -64,7 +64,7 @@
                     <div>
                         <img width="20px" src="@/assets/view/eyebai.png" alt="">
                         <img @click="dialogVisible = true" width="20px" src="@/assets/view/editbai.png" alt="">
-                        <img width="20px" src="@/assets/view/deletebai.png" alt="">
+                        <img width="20px" @click="handleDelet(3)" src="@/assets/view/deletebai.png" alt="">
                     </div>
                 </div>
                 <div class="cardAdd" @click="handleAdd(3)">
@@ -139,24 +139,41 @@ let anchors = reactive(
 )
 console.log(anchors)
 const handleAdd = (item) => {
-    if(item===1){
-    leftData.value.push({
-        problem: '问题1',
-        text: '这是左侧卡片内容。这是左侧卡片内容。这是左侧卡片内这是左侧卡片内容。这是左侧卡片内容。这是左侧卡片内容。这是左侧卡片内容。'
-    })
-    }else if(item===2){
+    if (item === 1) {
+        leftData.value.push({
+            problem: '问题1',
+            text: '这是左侧卡片内容。这是左侧卡片内容。这是左侧卡片内这是左侧卡片内容。这是左侧卡片内容。这是左侧卡片内容。这是左侧卡片内容。'
+        })
+    } else if (item === 2) {
         centerData.value.push({
-        problem: '问题2',
-        text: '这是左侧卡片内容。这是左侧卡片内容。这是左侧卡片内这是左侧卡片内容。这是左侧卡片内容。这是左侧卡片内容。这是左侧卡片内容。'
-    })}else if(item===3){
+            problem: '问题2',
+            text: '这是左侧卡片内容。这是左侧卡片内容。这是左侧卡片内这是左侧卡片内容。这是左侧卡片内容。这是左侧卡片内容。这是左侧卡片内容。'
+        })
+    } else if (item === 3) {
         rightData.value.push({
-        problem: '问题3',
-        text: '这是左侧卡片内容。这是左侧卡片内容。这是左侧卡片内这是左侧卡片内容。这是左侧卡片内容。这是左侧卡片内容。这是左侧卡片内容。'
-    })
+            problem: '问题3',
+            text: '这是左侧卡片内容。这是左侧卡片内容。这是左侧卡片内这是左侧卡片内容。这是左侧卡片内容。这是左侧卡片内容。这是左侧卡片内容。'
+        })
     }
 
     count = 0
     nextTick(() => {
+        resetAnchors()
+        resizeCanvas()
+    })
+}
+
+const handleDelet = (item) => {
+    if (item === 1) {
+        leftData.value.pop()
+    } else if (item === 2) {
+        centerData.value.pop()
+    } else if (item === 3) {
+        rightData.value.pop()
+    }
+
+    count = 0
+    setTimeout(() => {
         resetAnchors()
         resizeCanvas()
     })
@@ -174,19 +191,20 @@ function toLocalCoord(pageX, pageY) {
     const off = getOffset(container)
     return { x: pageX - off.left, y: pageY - off.top }
 }
-const toHot = ()=>{
+const toHot = () => {
     router.push('/IssueKnowledgeHot')
 }
 let count = 0
 
 function resetAnchors() {
+    
     const container = containerRef.value
     if (!container || !leftRef.value || !centerRef.value || !rightRef.value) return
     const cOff = getOffset(container)
     const leftRect = leftRef.value
     const centerRect = centerRef.value
     const rightRect = rightRef.value
-
+    console.log({leftRect,centerRect,rightRect,anchors})
     const len = Math.max(leftRect.length, centerRect.length, rightRect.length)
 
     for (let i = 0; i < len; i++) {
@@ -259,7 +277,7 @@ function drawCurve(ctx, from, to) {
 
     ctx.beginPath()
     ctx.moveTo(from.x, from.y)
-    ctx.quadraticCurveTo(midX, midY + offset, midArrowX-10, midArrowY)
+    ctx.quadraticCurveTo(midX, midY + offset, midArrowX - 10, midArrowY)
     ctx.lineWidth = 3
     ctx.strokeStyle = '#6b46c1'
     ctx.lineCap = 'round'
@@ -344,11 +362,11 @@ onMounted(() => {
     resetAnchors()
     loop()
 
-    const onResize = () => {
-        resizeCanvas()
-        resetAnchors()
-    }
-    window.addEventListener('resize', onResize)
+    // const onResize = () => {
+    //     resizeCanvas()
+    //     resetAnchors()
+    // }
+    // window.addEventListener('resize', onResize)
 
     const onPointerMove = (e) => {
         if (!isLinking.value) return

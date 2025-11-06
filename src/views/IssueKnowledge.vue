@@ -9,15 +9,24 @@
                         全局层问题
                         <img @click="dialogVisible = true" width="15px" src="@/assets/view/edit.png" alt="">
                     </div>
-                    <span>与课程层面对应问题</span>
+                    <div class="questionCardTitle-info">与课程层面对应问题</div>
                 </div>
                 <div ref="leftRef" class="card left" @click="toHot" v-for="item in leftData" :key="item">
                     <h3>{{ item.problem }}</h3>
                     <p>{{ item.text }}</p>
-                    <div>
-                        <img width="20px" src="@/assets/view/eyebai.png" alt="">
-                        <img @click="dialogVisible = true" width="20px" src="@/assets/view/editbai.png" alt="">
-                        <img width="20px" @click="handleDelet(1)" src="@/assets/view/deletebai.png" alt="">
+                    <div class="card-tab">
+                        <div class="card-tab-item">标签1</div>
+                        <div class="card-tab-item">标签1</div>
+                    </div>
+                    <div class="card-info">
+                        <div class="card-info-left">
+                            6个知识点
+                        </div>
+                        <div class="card-info-right">
+                            <img width="20px" src="@/assets/view/eyebai.png" alt="">
+                            <img @click="dialogVisible = true" width="20px" src="@/assets/view/editbai.png" alt="">
+                            <img width="20px" @click="handleDelet(1)" src="@/assets/view/deletebai.png" alt="">
+                        </div>
                     </div>
                 </div>
                 <div class="cardAdd" @click="handleAdd(1)">
@@ -32,15 +41,24 @@
                         要素层问题
                         <img @click="dialogVisible = true" width="15px" src="@/assets/view/edit.png" alt="">
                     </div>
-                    <span>以 “要素” 为核心，将课程教学内容分解为关键组成要素</span>
+                    <div class="questionCardTitle-info">以 “要素” 为核心，将课程教学内容分解为关键组成要素,为核心，将课程教学内容分解为关键组成要素</div>
                 </div>
                 <div ref="centerRef" class="card center" v-for="item in centerData">
                     <h3>{{ item.problem }}</h3>
                     <p>{{ item.text }}</p>
-                    <div>
-                        <img width="20px" src="@/assets/view/eyebai.png" alt="">
-                        <img @click="dialogVisible = true" width="20px" src="@/assets/view/editbai.png" alt="">
-                        <img width="20px" @click="handleDelet(2)" src="@/assets/view/deletebai.png" alt="">
+                    <div class="card-tab">
+                        <div class="card-tab-item">标签1</div>
+                        <div class="card-tab-item">标签1</div>
+                    </div>
+                    <div class="card-info">
+                        <div class="card-info-left">
+                            6个知识点
+                        </div>
+                        <div class="card-info-right">
+                            <img width="20px" src="@/assets/view/eyebai.png" alt="">
+                            <img @click="dialogVisible = true" width="20px" src="@/assets/view/editbai.png" alt="">
+                            <img width="20px" @click="handleDelet(2)" src="@/assets/view/deletebai.png" alt="">
+                        </div>
                     </div>
                 </div>
                 <div class="cardAdd" @click="handleAdd(2)">
@@ -56,15 +74,24 @@
                         应用层问题
                         <img @click="dialogVisible = true" width="15px" src="@/assets/view/edit.png" alt="">
                     </div>
-                    <span>以 “应用” 为核心，将课程教学内容分解为实际场景中的运用环节</span>
+                    <div class="questionCardTitle-info">以 “应用” 为核心，将课程教学内容分解为实际场景中的运用环节</div>
                 </div>
                 <div ref="rightRef" class="card right" v-for="item in rightData">
                     <h3>{{ item.problem }}</h3>
                     <p>{{ item.text }}</p>
-                    <div>
-                        <img width="20px" src="@/assets/view/eyebai.png" alt="">
-                        <img @click="dialogVisible = true" width="20px" src="@/assets/view/editbai.png" alt="">
-                        <img width="20px" @click="handleDelet(3)" src="@/assets/view/deletebai.png" alt="">
+                    <div class="card-tab">
+                        <div class="card-tab-item">标签1</div>
+                        <div class="card-tab-item">标签1</div>
+                    </div>
+                    <div class="card-info">
+                        <div class="card-info-left">
+                            6个知识点
+                        </div>
+                        <div class="card-info-right">
+                            <img width="20px" src="@/assets/view/eyebai.png" alt="">
+                            <img @click="dialogVisible = true" width="20px" src="@/assets/view/editbai.png" alt="">
+                            <img width="20px" @click="handleDelet(3)" src="@/assets/view/deletebai.png" alt="">
+                        </div>
                     </div>
                 </div>
                 <div class="cardAdd" @click="handleAdd(3)">
@@ -197,20 +224,21 @@ const toHot = () => {
 let count = 0
 
 function resetAnchors() {
-    
+
     const container = containerRef.value
     if (!container || !leftRef.value || !centerRef.value || !rightRef.value) return
     const cOff = getOffset(container)
     const leftRect = leftRef.value
     const centerRect = centerRef.value
     const rightRect = rightRef.value
-    console.log({leftRect,centerRect,rightRect,anchors})
+    console.log({ leftRect, centerRect, rightRect, anchors })
     const len = Math.max(leftRect.length, centerRect.length, rightRect.length)
 
     for (let i = 0; i < len; i++) {
 
         if (leftRect[i]) {
             const left = leftRect[i].getBoundingClientRect()
+            //console.log('let:' + left)
             anchors[count++] = { x: left.right - cOff.left, y: left.top + left.height / 2 - cOff.top }
         }
 
@@ -433,6 +461,8 @@ onMounted(() => {
     border-radius: 16px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
 }
 
 .canvas {
@@ -444,32 +474,70 @@ onMounted(() => {
 }
 
 .cardSuperior {
-    /* position: absolute; */
-    margin: 0 100px;
+    padding: 10px 0;
+    width: 300px;
+    ;
 
     .cardAdd {
         margin-top: 10px;
         border: #5471ff 2px solid;
         color: #5471ff;
         text-align: center;
-        width: 300px;
         border-radius: 5px;
         cursor: pointer;
+        font-size: 14px;
+        padding: 3px 0;
     }
 
     .questionCardTitle {
         display: flex;
         flex-direction: column;
-        /* position: absolute; */
         color: #000;
-        /* bottom: 40px; */
-        /* top: -50px; */
 
-        img {
+        >div {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            cursor: pointer;
+            color: #333;
+            font-size: 16px;
+        }
+
+        img:nth-child(1) {
             margin-right: 5px;
-            margin-top: 5px;
+        }
+
+        img:nth-child(2) {
+            margin-left: 5px;
+        }
+
+        .questionCardTitle-info {
+            color: #666;
+            font-size: 14px;
+            height: 21px;
+            margin: 5px 0 10px 0;
+            align-items: flex-start;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
+
+    .cardTitle {
+        display: flex;
+        flex-direction: column;
+        color: #000;
+
+        >div {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
             cursor: pointer;
         }
+
+        img:nth-child(1) {}
 
         span {
             font-size: 12px;
@@ -481,21 +549,52 @@ onMounted(() => {
         width: 300px;
         padding: 16px;
         border-radius: 12px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
         color: #fff;
         margin-bottom: 10px;
 
-        div {
-            text-align: end;
+        /* background: linear-gradient(to bottom right, #faf5ff, #ede9fe); */
+        .card-tab {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        .card-tab-item {
+            margin-right: 6px;
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
+        .card-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 5px;
+        }
+
+        .card-info-left {
+            font-size: 12px;
+            border: 1px solid #fff;
+            border-radius: 4px;
+            padding: 2px 6px;
+        }
+
+        .card-info-right {
+            flex: 1;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
             cursor: pointer;
 
             img {
                 margin: 0 8px;
             }
         }
-
-        /* background: linear-gradient(to bottom right, #faf5ff, #ede9fe); */
     }
+
 }
 
 .card h3 {
@@ -510,14 +609,26 @@ onMounted(() => {
 
 .left {
     background-color: #0037a1;
+
+    .card-tab-item {
+        background-color: #002871;
+    }
 }
 
 .center {
     background-color: #00a167;
+
+    .card-tab-item {
+        background-color: #005939;
+    }
 }
 
 .right {
     background-color: #fa6da9;
+
+    .card-tab-item {
+        background-color: #BD346F;
+    }
 }
 
 .anchor {
